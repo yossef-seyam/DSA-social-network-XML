@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1764464880 source:e:\asu-foe\fall 25\dsa\project\part1_integration\main.cpp
+	<iostream>
+	<fstream>
+	<sstream>
+	<string>
+	<stack>
+	<vector>
+	<cctype>
+	"XMLNode.h"
+
+1764345895 e:\asu-foe\fall 25\dsa\project\part1_integration\xmlnode.h
+	<string>
+	<vector>
+	<iostream>
+
