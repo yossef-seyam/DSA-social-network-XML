@@ -1,0 +1,10 @@
+# Ignore Build Artifacts
+bin/
+*.exe
+*.o
+__pycache__/
+
+# Ignore Output Files
+*.png
+*.csv
+temp.xml
