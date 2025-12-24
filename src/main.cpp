@@ -1,10 +1,12 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "../inc/XML.h"
 #include "../inc/XMLNode.h"
 #include "../inc/XMLTREE.h"
 using namespace std;
+
 
 int main(int argc, char *argv[])
 {
@@ -227,12 +229,25 @@ int main(int argc, char *argv[])
         }
         else if (command == "draw")
         {
-            // Generates CSV for Python
-            string pngFile = outputFile.empty() ? "social_network.png" : outputFile;
-            string csvFile = "graph.csv";
+            // Determine output directory
+            string pngFile = outputFile.empty() ? "social_network_using_cpp.png" : outputFile;
+            
+            // If output is relative and input file has a directory, use input's directory
+            if (!isAbsolutePath(pngFile) && !inputFile.empty()) {
+                string inputDir = getDirectory(inputFile);
+                if (!inputDir.empty()) {
+                    pngFile = combinePaths(inputDir, pngFile);
+                }
+            }
+            
+            // CSV should be in same directory as PNG
+            string csvFile = combinePaths(getDirectory(pngFile), "graph.csv");
             
             tree->saveGraphCSV(csvFile); // draw with python
             tree->saveGraphPNG(pngFile); // draw with c++
+            
+            cout << "Graph CSV saved to: " << csvFile << endl;
+            cout << "Graph PNG saved to: " << pngFile << endl;
         }
         else
         {

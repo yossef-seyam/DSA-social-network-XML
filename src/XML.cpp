@@ -21,13 +21,50 @@ string trim(const string &str)
     return str.substr(first, (last - first + 1));
 }
 
+// Helper function to get directory from file path
+string getDirectory(const string& filepath) {
+    size_t lastSlash = filepath.find_last_of("/\\");
+    if (lastSlash != string::npos) {
+        return filepath.substr(0, lastSlash + 1);
+    }
+    return "";  // No directory, just filename
+}
 
-/*********
+// Helper function to combine path and filename
+string combinePaths(const string& dir, const string& filename) {
+    if (dir.empty()) return filename;
+    if (dir.back() == '/' || dir.back() == '\\') {
+        return dir + filename;
+    }
+    return dir + "/" + filename;
+}
+
+// Helper function to check if path is absolute
+bool isAbsolutePath(const string& path) {
+    if (path.empty()) return false;
+    
+    // Check for Windows absolute path (C:\ or \\)
+    if (path.size() > 2) {
+        if (isalpha(path[0]) && path[1] == ':') return true;
+        if (path[0] == '\\' && path[1] == '\\') return true;
+    }
+    
+    // Check for Unix absolute path
+    return path[0] == '/';
+}
+
+// Helper function to get filename from path
+string getFilename(const string& path) {
+    size_t lastSlash = path.find_last_of("/\\");
+    if (lastSlash != string::npos) {
+        return path.substr(lastSlash + 1);
+    }
+    return path;
+}
 
 
 
 
-*/
 
 
 static inline void ltrim(string &s)
@@ -271,23 +308,32 @@ string validate(string xmlText, bool autoFix)
         // B. Handle Special XML Blocks (Comments / CDATA)
         // ---------------------------------------------------------
         // Skip Comments 
-        // if (i + 3 < n && xmlText.substr(i, 4) == "", i + 4){
-        //     size_t endPos = xmlText.find("]]>", i + 4);
-        //     if (endPos == string::npos) { /* Handle Error if needed */ break; }
-        //     string chunk = xmlText.substr(i, (endPos - i) + 3);
-        //     fixed += chunk;
-        //     line += countNewLines(chunk);
-        //     i = (int)(endPos + 2);
-        //     continue;
-        // }
-        // Skip CDATA <![CDATA[ ... ]]>
-        if (i + 8 < n && xmlText.substr(i, 9) == "<![CDATA[") {
-            size_t endPos = xmlText.find("]]>", i + 9);
-            if (endPos == string::npos) { /* Handle Error if needed */ break; }
+        if (i + 3 < n && xmlText.substr(i, 4) == "<!--") {
+            size_t endPos = xmlText.find("-->", i + 4);
+            if (endPos == string::npos) { 
+                errors.push_back("Line " + to_string(line) + ": Unclosed comment <!--");
+                if (autoFix) fixed += "-->"; // Close it
+                break; 
+            }
             string chunk = xmlText.substr(i, (endPos - i) + 3);
             fixed += chunk;
             line += countNewLines(chunk);
-            i = (int)(endPos + 2);
+            i = (int)(endPos + 2);  // Set i to position of '>' in '-->'
+            // Next loop will increment i, so we'll process character after '>'
+            continue;
+        }
+                // Skip CDATA <![CDATA[ ... ]]>
+        if (i + 8 < n && xmlText.substr(i, 9) == "<![CDATA[") {
+            size_t endPos = xmlText.find("]]>", i + 9);
+            if (endPos == string::npos) { 
+                errors.push_back("Line " + to_string(line) + ": Unclosed CDATA <![CDATA[");
+                if (autoFix) fixed += "]]>"; // Close it
+                break; 
+            }
+            string chunk = xmlText.substr(i, (endPos - i) + 3);
+            fixed += chunk;
+            line += countNewLines(chunk);
+            i = (int)(endPos + 2);  // Set i to position of '>' in ']]>'
             continue;
         }
 
