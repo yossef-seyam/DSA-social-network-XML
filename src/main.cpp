@@ -228,7 +228,7 @@ int main(int argc, char *argv[])
         else if (command == "draw")
         {
             // Generates CSV for Python
-            string pngFile = outputFile.empty() ? "social_network.png" : outputFile;
+            string pngFile = outputFile.empty() ? "social_network_using_cpp.png" : outputFile;
             string csvFile = "graph.csv";
             
             tree->saveGraphCSV(csvFile); // draw with python

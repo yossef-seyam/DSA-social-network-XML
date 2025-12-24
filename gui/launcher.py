@@ -27,15 +27,47 @@ def main():
         print("\n[+] Opening Command Prompt...")
         
         # Windows Logic
+        print("\n[+] Opening Command Prompt...")
+        
+        # Get project paths
+        gui_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.join(gui_dir, "..")
+        project_root = os.path.abspath(project_root)
+        
         if platform.system() == "Windows":
-            # 'start cmd /k' opens a new CMD window and keeps it open (/k)
-            # We also inject a helpful echo command so the user knows what to do
+            help_text = [
+                "==================================================",
+                "  XML Editor CLI - Project Root Directory",
+                "==================================================",
+                "",
+                "Available Commands:",
+                "",
+                "  xml_editor verify -i data/sample.xml [-f] [-o output.xml]",
+                "  xml_editor format -i data/sample.xml [-o formatted.xml]",
+                "  xml_editor mini -i data/sample.xml [-o minified.xml]",
+                "  xml_editor json -i data/sample.xml [-o output.json]",
+                "  xml_editor compress -i data/sample.xml [-o compressed.comp]",
+                "  xml_editor decompress -i compressed.comp [-o decompressed.xml]",
+                "",
+                "  xml_editor draw -i data/sample.xml [-o graph.jpg]",
+                "  xml_editor most_active -i data/sample.xml",
+                "  xml_editor most_influencer -i data/sample.xml",
+                "  xml_editor mutual -i data/sample.xml -ids 1,2",
+                "  xml_editor suggest -i data/sample.xml -id 1",
+                "  xml_editor search -w lorem -i data/sample.xml",
+                "  xml_editor search -t sports -i data/sample.xml",
+                "",
+                "Note: All output files will be saved in the same folder as input!",
+                ""
+            ]
+            
+            # Build the echo commands
+            echo_lines = " && ".join([f'echo {line}' for line in help_text])
+            
             cmd_command = (
-                'start cmd /k "cd /d ..\\bin && '
-                'echo ============================================ && '
-                'echo   CLI MODE - You are now in /bin folder      && '
-                'echo ============================================ && '
-                'echo Try running: xml_editor.exe verify -i ../data/sample.xml && echo."'
+                f'start cmd /k "cd /d "{project_root}" && '
+                f'{echo_lines}'
+                '"'
             )
             os.system(cmd_command)
         else:

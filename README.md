@@ -4,7 +4,7 @@
 2. Run: `g++ src/main.cpp src/XMLTREE.cpp src/XMLNode.cpp -o bin/xml_editor.exe`
 3. Double click `run.bat` to start!
 
-# Commands
+## Commands
 
 g++ -std=c++17 main.cpp XMLTREE.cpp XML.cpp XMLNode.cpp -o xml_editor.exe
 
