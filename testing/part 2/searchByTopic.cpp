@@ -1,12 +1,3 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include "XMLTREE.h"
-#include "XMLNode.h"
-#include <stack>
-#include <map>
-#include "XML.h"
 void XMLTREE::searchByTopic(const string &xml, const string &topic)
 {
     string lowerTargetTopic = toLower(topic);
@@ -88,4 +79,5 @@ void XMLTREE::searchByTopic(const string &xml, const string &topic)
         cout << "No posts contain the topic: " << topic << endl;
     else
         cout << "Found " << postCount << " post(s) with topic: \"" << topic << "\"\n";
+
 }
