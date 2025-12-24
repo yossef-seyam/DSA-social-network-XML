@@ -18,7 +18,7 @@ struct TagInfo {
 };
 
 // ================== DECLARATIONS of functions=========//
-
+//helpers
 string readFile(const string &filename);
 string validate(string xmlText, bool autoFix);
 void writeFile(const string &filename, const string &content);
@@ -27,6 +27,12 @@ string minify(XMLNode *node);
 string xmlToJSON(XMLNode *node, int depth = 0, bool isArrayElement = false);
 bool isAllWhitespace(const string &s);
 string trim(const string &str);
+string getDirectory(const string& filepath);
+string combinePaths(const string& dir, const string& filename);
+bool isAbsolutePath(const string& path);
+string getFilename(const string& path);
+
+
 
 // Compression Functions Declarations
 void buildDictionary(const string &content, vector<Pair> &dictionary);
