@@ -1,39 +1,66 @@
-# How to Build
+# XML Editor - Social Network Analyzer
 
-1. Open terminal in the root folder.
-2. Run: `g++ -std=c++17 src/main.cpp src/XMLTREE.cpp src/XML.cpp src/XMLNode.cpp -o bin/xml_editor.exe`
-3. Double click `run.bat` to start!
+A command-line tool for XML parsing, validation, and social network analysis.
 
-## Commands
+## Features
 
-g++ -std=c++17 main.cpp XMLTREE.cpp XML.cpp XMLNode.cpp -o xml_editor.exe
+- **XML Operations**: Verify, format, minify, and convert XML to JSON
+- **Compression**: Compress and decompress XML files
+- **Social Network Analysis**: Find influencers, mutual friends, and suggest connections
+- **Visualization**: Generate graph visualizations from XML data
+- **Search**: Search posts by word or topic
 
-### part 1 commands
+## Build
 
-xml_editor verify -i sample_v.xml -f -o fixed.xml
+```bash
+g++ -std=c++17 src/main.cpp src/XMLTREE.cpp src/XML.cpp src/XMLNode.cpp -o bin/xml_editor.exe
+```
 
-xml_editor format -i sample_f.xml -o formatted.xml
+Or simply run `run.bat` after building.
 
-xml_editor mini -i sample_m.xml -o mini.xml
+## Usage
 
-xml_editor json -i sample.xml -o output.json
+```bash
+xml_editor <command> -i <input_file> [options]
+```
 
-xml_editor compress -i sample.xml -o compressed_file.comp
+### XML Commands
 
-xml_editor decompress -i compressed_file.comp -o output_file.xml
+| Command | Description | Example |
+|---------|-------------|---------|
+| `verify` | Check XML validity | `xml_editor verify -i file.xml -f -o fixed.xml` |
+| `format` | Pretty-print XML | `xml_editor format -i file.xml -o formatted.xml` |
+| `mini` | Minify XML | `xml_editor mini -i file.xml -o mini.xml` |
+| `json` | Convert to JSON | `xml_editor json -i file.xml -o output.json` |
+| `compress` | Compress XML | `xml_editor compress -i file.xml -o file.comp` |
+| `decompress` | Decompress file | `xml_editor decompress -i file.comp -o file.xml` |
 
-### part 2 commands
+### Network Analysis Commands
 
-xml_editor draw -i sample.xml -o output_file.jpg
+| Command | Description | Example |
+|---------|-------------|---------|
+| `draw` | Visualize network | `xml_editor draw -i file.xml -o graph.jpg` |
+| `most_active` | Find most active user | `xml_editor most_active -i file.xml` |
+| `most_influencer` | Find top influencer | `xml_editor most_influencer -i file.xml` |
+| `mutual` | Find mutual friends | `xml_editor mutual -i file.xml -ids 1,2` |
+| `suggest` | Suggest connections | `xml_editor suggest -i file.xml -id 1` |
+| `search` | Search posts | `xml_editor search -w <word> -i file.xml` |
+|  |  | `xml_editor search -t <topic> -i file.xml` |
 
-xml_editor most_active -i sample.xml
+## Project Structure
 
-xml_editor most_influencer -i sample.xml
+```
+├── src/          # Source files
+├── inc/          # Header files
+├── data/         # Sample XML files
+├── bin/          # Compiled binaries
+└── gui/          # GUI components
+```
 
-xml_editor mutual -i sample.xml -ids 1,2
+## Requirements
 
-xml_editor suggest -i sample.xml -id 1
+- C++17 compatible compiler (g++, clang++, MSVC)
 
-xml_editor search -w lorem. -i sample.xml
+## License
 
-xml_editor search -t sports -i sample.xml
+MIT License

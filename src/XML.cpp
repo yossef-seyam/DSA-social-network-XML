@@ -33,6 +33,9 @@ string getDirectory(const string& filepath) {
 // Helper function to combine path and filename
 string combinePaths(const string& dir, const string& filename) {
     if (dir.empty()) return filename;
+    if (filename.find(dir) == 0) {
+        return filename; // Already has the directory prefix
+    }
     if (dir.back() == '/' || dir.back() == '\\') {
         return dir + filename;
     }

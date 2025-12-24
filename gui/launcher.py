@@ -2,6 +2,7 @@ import os
 import platform
 import sys
 
+
 def show_menu():
     print("\n" + "="*50)
     print("        XML Editor - Main Menu")
@@ -63,6 +64,7 @@ def run_cli_mode():
         wrapper_content = '''import sys
 import os
 import subprocess
+from pathlib import Path
 
 def process_args(args):
     """Add data/ prefix to file arguments"""
@@ -85,29 +87,27 @@ def process_args(args):
 
 def main():
     # Get paths
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    exe_path = os.path.join(script_dir, "bin", "xml_editor.exe")
+    script_dir = Path(__file__).parent.absolute()
+    exe_path = script_dir / "bin" / "xml_editor.exe"
     
-    if not os.path.exists(exe_path):
-        print(f"Error: Executable not found at {exe_path}")
-        sys.exit(1)
+    # Change to data directory
+    data_dir = script_dir / "data"
     
-    # Process command line arguments
-    if len(sys.argv) < 2:
-        print("Usage: xml_editor <command> [options]")
-        print("Example: xml_editor verify -i sample.xml -o output.xml")
-        sys.exit(1)
+    # Process arguments WITHOUT adding data/ prefix
+    args = sys.argv[1:]
+    processed_args = []
     
-    # Process arguments to add data/ prefix
-    processed_args = process_args(sys.argv[1:])
+    for i, arg in enumerate(args):
+        processed_args.append(arg)
+        if arg in ['-i', '-o'] and i + 1 < len(args):
+            next_arg = args[i + 1]
+            processed_args.append(next_arg)
+            i += 1
     
-    # Debug: Show what's being executed
-    print(f"[Executing]: {exe_path} {' '.join(processed_args)}")
-    print("-" * 60)
+    print(f"[Executing from {data_dir}]: {exe_path} {' '.join(processed_args)}")
     
-    # Run the command
-    cmd = [exe_path] + processed_args
-    result = subprocess.run(cmd, cwd=script_dir)
+    # Run from data directory
+    result = subprocess.run([str(exe_path)] + processed_args, cwd=data_dir)
     sys.exit(result.returncode)
 
 if __name__ == "__main__":

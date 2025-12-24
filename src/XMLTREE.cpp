@@ -467,7 +467,7 @@ void XMLTREE::saveGraphCSV(string filename)
         }
     }
     out.close();
-    cout << "Graph CSV saved to " << filename << endl;
+    // cout << "Graph CSV saved to " << filename << endl;
 }
 
 /*********************************/
@@ -860,5 +860,5 @@ void XMLTREE::saveGraphPNG(string filename)
 
     // 4. Save
     stbi_write_png(filename.c_str(), W, H, 4, img.data(), W * 4);
-    cout << "Graph PNG saved to " << filename << endl;
+    // cout << "Graph PNG saved to " << filename << endl;
 }
