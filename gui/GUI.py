@@ -97,6 +97,12 @@ def run_cpp_command(action, extra_args=None):
     input_filename = "temp_input.xml"
     
     if manual_text:
+        # Save to data folder, not current directory
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        data_dir = os.path.join(current_dir, "..", "data")
+        data_dir = os.path.abspath(data_dir)
+        
+        input_filename = os.path.join(data_dir, "temp_input.xml")
         with open(input_filename, "w") as f: 
             f.write(manual_text)
     elif entry_file_path.get():
@@ -150,11 +156,13 @@ def run_cpp_command(action, extra_args=None):
     try:
         # For draw action, we need special handling
         if action == "draw":
-            # Run from data directory so CSV is created there
-            result = subprocess.run(cmd, capture_output=True, text=True, cwd=data_dir)
             
-            # The CSV will be in data_dir, PNG at output_filename
-            csv_file = os.path.join(data_dir, "graph.csv")
+            input_dir = os.path.dirname(os.path.abspath(input_filename))
+            # Run from data directory so CSV is created there
+            result = subprocess.run(cmd, capture_output=True, text=True, cwd=input_dir)
+    
+            # The CSV will be in input_dir, PNG at output_filename
+            csv_file = os.path.join(input_dir, "graph.csv")
             png_file = output_filename
             
             # Display results
@@ -187,7 +195,7 @@ def run_cpp_command(action, extra_args=None):
                 text_output.insert(tk.END, "--- CONSOLE OUTPUT ---\n" + result.stdout + "\n")
             
             # Display File Content (if text based)
-            if os.path.exists(output_filename) and action != "compress":
+            if os.path.exists(output_filename) :
                 text_output.insert(tk.END, f"\n--- FILE: {output_filename} ---\n")
                 try:
                     with open(output_filename, "r") as f: 
