@@ -2,8 +2,6 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-#include <filesystem>
-
 bool isAllWhitespace(const string &s)
 {
     for (char c : s)
