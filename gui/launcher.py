@@ -31,6 +31,7 @@ def run_cli_mode():
     project_root = os.path.join(current_dir, "..")
     project_root = os.path.abspath(project_root)
     
+    #create python script for handling commands
     if platform.system() == "Windows":
         help_text = [
             "==========================================================",
