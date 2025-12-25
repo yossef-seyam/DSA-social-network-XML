@@ -39,11 +39,9 @@ void buildDictionary(const string &content, vector<Pair> &dictionary);
 string replacePatternsWithTokens(const string &content, const vector<Pair> &dictionary);
 void compressFile(const string &inputFile, const string &outputFile);
 void parseDictionary(ifstream &input, vector<Pair> &dictionary);
-string replaceTokensWithPatterns(const string &content, const vector<Pair> &dictionary); // where is the implementation??
+string replaceTokensWithPatterns(const string &content, const vector<Pair> &dictionary);
 void decompressFile(const string &inputFile, const string &outputFile);
 
-
-void parse_commands(int argc, char *argv[]); // where is the implementation??
 
 
 

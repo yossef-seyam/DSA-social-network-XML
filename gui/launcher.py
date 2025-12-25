@@ -36,11 +36,9 @@ def run_cli_mode():
             "==========================================================",
             "  XML Editor CLI - Enhanced Mode",
             "==========================================================",
-            "",
             "How it works:",
             "  1. You type: xml_editor format -i sample.xml -o output.xml",
             "  2. System runs: bin\\xml_editor.exe -i data\\sample.xml -o data\\output.xml",
-            "",
             "Examples (type exactly as shown):",
             "  xml_editor verify -i sample.xml -f -o fixed.xml",
             "  xml_editor format -i sample.xml -o formatted.xml",
@@ -48,16 +46,14 @@ def run_cli_mode():
             "  xml_editor draw -i sample.xml -o graph.jpg",
             "  xml_editor compress -i sample.xml -o compressed.comp",
             "  xml_editor decompress -i compressed.comp -o decompressed.xml",
-            "",
             "  xml_editor most_active -i sample.xml",
             "  xml_editor most_influencer -i sample.xml",
             "  xml_editor mutual -i sample.xml -ids 1,2",
             "  xml_editor suggest -i sample.xml -id 1",
             "  xml_editor search -w lorem -i sample.xml",
             "  xml_editor search -t sports -i sample.xml",
-            "",
-            "Note: All files are automatically prefixed with data/",
-            ""
+            "Note: All files are automatically prefixed with data/"
+            
         ]
         
         # Create a Python wrapper script
